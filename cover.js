@@ -20,6 +20,7 @@ $('document').ready(function(){
     var decreament = canvas/3 * 2;
     var choiceArray = null;
     var computerChoice = null;
+    var message = null;
     
     var choicePic = {
         x1: space + w,
@@ -57,17 +58,32 @@ $('document').ready(function(){
             
             if (choice > computerChoice){
                 console.log('You Won!');
+                message = "You Won!";
+                writeMessage();
                 p2++;
                 console.log(p2);
                 
             } else if (choice === computerChoice){
                 console.log('Draw');
+                message = "Draw";
+                writeMessage();
             } else if (choice < computerChoice){
                 console.log('Keep Trying!');
+                message = "Keep Trying!";
+                writeMessage();
                 p1++;
                 console.log(p1);
             }
         }
+        
+        
+    function writeMessage(){
+        c.font = "30px Comic Sans MS";
+        c.textAlign = 'center';
+        c.fillText(message, canvas.width / 2, canvas.height / 2);
+        c.fill();
+        
+    }
     
     
     function Stage(x, y, p){
@@ -138,16 +154,19 @@ $('document').ready(function(){
             requestAnimationFrame(animate);
             c.clearRect(0, 0, canvas.width, canvas.height);
             
-            stage1.update();
-            stage2.update();
+            // stage1.update();
+            // stage2.update();
             
             
             c.drawImage(rockImg,rockButton.x, rockButton.y, rockButton.width, rockButton.height);
             c.drawImage(scissorsImg, scissorsButton.x, scissorsButton.y, scissorsButton.width, scissorsButton.height);
             c.drawImage(paperImg, paperButton.x, paperButton.y, paperButton.width, paperButton.height);
         
-            c.drawImage(choiceArray[choice], choicePic.x1, choicePic.y1, picWidth, picHeight);
-            c.drawImage(choiceArray[computerChoice], choicePic.x2, choicePic.y2, picWidth, picHeight);
+            if (choiceArray !== null) {
+                c.drawImage(choiceArray[choice], choicePic.x1, choicePic.y1, picWidth, picHeight);
+                c.drawImage(choiceArray[computerChoice], choicePic.x2, choicePic.y2, picWidth, picHeight);
+                writeMessage();
+            }
         }
         animate();
     
